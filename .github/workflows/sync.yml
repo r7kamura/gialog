@@ -29,5 +29,6 @@ jobs:
           disable_nojekyll: true
           force_orphan: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          keep_files: false
           publish_branch: data
           publish_dir: ./
