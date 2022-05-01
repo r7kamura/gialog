@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { getIssue, listIssues } from "../../lib/issue";
-import Time from "../components/Time";
+import Time from "../../components/Time";
 
 type Props = {
   issue: Issue;
