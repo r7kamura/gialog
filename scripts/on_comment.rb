@@ -99,6 +99,4 @@ end
 
 payload = GetGitHubPayload.call
 
-pp payload
-
 UpdateIssue.call(payload['issue'])
