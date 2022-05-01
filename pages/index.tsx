@@ -1,23 +1,21 @@
 import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import Link from "next/link";
 import { listIssues } from "../lib/issue"
 
 type Props = {
   issues: Array<Issue>;
 }
 
-type Issue = {
-  id: number;
-}
+type Issue = any;
 
 const Home: NextPage<Props> = ({ issues }) => {
   return (
     <ol>
       {issues.map((issue) => (
         <li>
-          {issue.id}
+          <Link href={`/articles/${issue.number}`}>
+            {issue.title}
+          </Link>
         </li>
       ))}
     </ol>
