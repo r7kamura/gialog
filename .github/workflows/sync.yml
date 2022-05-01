@@ -22,4 +22,4 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - run: ruby scrpts/on_comment.rb
+      - run: ruby scripts/on_comment.rb
