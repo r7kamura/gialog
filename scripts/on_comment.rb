@@ -51,7 +51,7 @@ class Database
   # @return [Hash]
   def read
     if pathname.exist?
-      ::JSON.parse(content)
+      ::JSON.parse(pathname.read)
     else
       DEFAULT_VALUE
     end
