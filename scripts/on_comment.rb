@@ -118,7 +118,7 @@ class GetIssueBodyHtml
 
   # @return [String]
   def call
-    client = ::Octokit::Client.new
+    client = ::Octokit::Client.new(access_token: ::ENV['GITHUB_TOKEN'])
     owner, name = ::ENV['GITHUB_REPOSITORY'].split('/', 2)
     query = <<-GRAPHQL
     query {
