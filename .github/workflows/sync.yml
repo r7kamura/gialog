@@ -25,10 +25,10 @@ jobs:
       - run: ruby scripts/on_comment.rb
       - uses: peaceiris/actions-gh-pages@v3
         with:
-          destination_dir: ./
+          destination_dir: data
           disable_nojekyll: true
           force_orphan: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
           keep_files: false
           publish_branch: data
-          publish_dir: ./
+          publish_dir: data

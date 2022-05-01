@@ -59,6 +59,7 @@ class Database
 
   # @param [Hash] data
   def write(data)
+    pathname.parent.mkpath
     pathname.write(
       ::JSON.dump(data)
     )
@@ -73,7 +74,7 @@ class Database
 
   # @return [String]
   def path
-    'issues.json'
+    'data/issues.json'
   end
 end
 
