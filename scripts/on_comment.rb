@@ -112,7 +112,7 @@ class GetIssueBodyHtml
   end
 
   # @param [Integer] issue_number
-  def initialize
+  def initialize(issue_number:)
     @issue_number = issue_number
   end
 
