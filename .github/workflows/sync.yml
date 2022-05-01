@@ -26,7 +26,9 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - run: ruby scripts/on_comment.rb
+      - run: bundle exec ruby scripts/on_comment.rb
+        env:
+          OCTOKIT_TEST_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: peaceiris/actions-gh-pages@v3
         with:
           destination_dir: .

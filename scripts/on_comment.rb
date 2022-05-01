@@ -1,5 +1,6 @@
 require 'json'
 require 'pathname'
+require 'octokit'
 
 # Note: In this code, we believe the payload is correctly passed.
 class GetGitHubPayload
@@ -92,10 +93,49 @@ class UpdateIssue
   end
 
   def call
+    body_html = ::GetIssueBodyHtml.call(issue_number: @issue['number'])
+
     data = ::Database.read
     data['issues'] ||= {}
-    data['issues'][@issue['id']] = @issue
+    data['issues'][@issue['id']] = @issue.merge('bodyHTML' => body_html)
     ::Database.write(data)
+  end
+end
+
+class GetIssueBodyHtml
+  class << self
+    # @param [Integer] issue_number
+    # @return [String]
+    def call(issue_number:)
+      new(issue_number: issue_number).call
+    end
+  end
+
+  # @param [Integer] issue_number
+  def initialize
+    @issue_number = issue_number
+  end
+
+  # @return [String]
+  def call
+    client = ::Octokit::Client.new
+    owner, name = ::ENV['GITHUB_REPOSITORY'].split('/', 2)
+    query = <<-GRAPHQL
+    query {
+      repository(owner: "#{owner}", name: "#{name}") {
+        issue(number: #{@issue_number}) {
+          bodyHTML
+        }
+      }
+    }
+    GRAPHQL
+    response = client.post(
+      '/graphql',
+      {
+        query: query
+      }.to_json
+    )
+    response.dig(:data, :repository, :issue, :bodyHTML)
   end
 end
 
