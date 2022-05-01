@@ -15,9 +15,7 @@ const ShowArticle: NextPage<Props> = ({ issue }) => {
       <header>
         <h1>{issue.title}</h1>
       </header>
-      <div>
-        {issue.body}
-      </div>
+      <div>{issue.body}</div>
     </article>
   );
 };
