@@ -135,7 +135,7 @@ class GetIssueBodyHtml
         query: query
       }.to_json
     )
-    response.dig(:data, :repository, :issue, :bodyHTML)
+    response.data.repository.issue.bodyHTML
   end
 end
 
