@@ -92,6 +92,7 @@ class UpdateIssue
 
   def call
     data = ::Database.read
+    data['issues'] ||= {}
     data['issues'][@issue['id']] = @issue
     ::Database.write(data)
   end
