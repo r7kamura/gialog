@@ -15,7 +15,7 @@ const ShowArticle: NextPage<Props> = ({ issue }) => {
         <Time dateTime={issue.created_at} />
         <h1>{issue.title}</h1>
       </header>
-      <div>{issue.body}</div>
+      <div>{issue.bodyHTML}</div>
     </article>
   );
 };
