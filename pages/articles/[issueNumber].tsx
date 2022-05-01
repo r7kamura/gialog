@@ -9,8 +9,6 @@ type Props = {
 type Issue = any;
 
 const ShowArticle: NextPage<Props> = ({ issue }) => {
-  console.log(issue);
-
   return (
     <article>
       <header>
@@ -40,9 +38,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
   const issueNumber = parseInt(params.issueNumber, 10);
-
   const issue = getIssue({ issueNumber });
-  console.log(issueNumber);
   return {
     props: {
       issue,
