@@ -23,3 +23,10 @@ jobs:
         with:
           bundler-cache: true
       - run: ruby scripts/on_comment.rb
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          destination_dir: ./
+          disable_nojekyll: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: data
+          publish_dir: ./
