@@ -4,6 +4,43 @@ require 'octokit'
 
 # Note: In this code, we believe the payload is correctly passed.
 module Giab
+  class Sync
+    class << self
+      def call
+        new.call
+      end
+    end
+
+    def call
+      case github_event_name
+      when 'issues'
+        UpdateIssue.call(payload['issue'])
+      when 'issue_comments'
+        case payload['action']
+        when 'created', 'edited'
+          UpdateIssueComment.call(
+            issue: payload['issue'],
+            issue_comment: payload['comment']
+          )
+        when 'deleted'
+          raise ::NotImplementedError
+        end
+      end
+    end
+
+    private
+
+    # @return [String]
+    def github_event_name
+      ::ENV['GITHUB_EVENT_NAME']
+    end
+
+    # @return [Hash]
+    def payload
+      @payload ||= GetGitHubPayload.call
+    end
+  end
+
   class GetGitHubPayload
     class << self
       # @return [Hash]
