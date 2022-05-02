@@ -26,7 +26,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
-      - run: bundle exec ruby scripts/on_comment.rb
+      - run: bundle exec ruby scripts/on_issue.rb
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: peaceiris/actions-gh-pages@v3
