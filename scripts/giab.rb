@@ -35,7 +35,7 @@ module Giab
     end
   end
 
-  class IssuesDatabase
+  class Database
     DEFAULT_VALUE = {}
 
     class << self
@@ -76,7 +76,21 @@ module Giab
 
     # @return [String]
     def path
+      raise ::NotImplementedError
+    end
+  end
+
+  class IssuesDatabase < Database
+    # @return [String]
+    def path
       'data/issues.json'
+    end
+  end
+
+  class IssueCommentsDatabase < Database
+    # @return [String]
+    def path
+      'data/issue_comments.json'
     end
   end
 
@@ -137,6 +151,55 @@ module Giab
         }.to_json
       )
       response.data.repository.issue.bodyHTML
+    end
+  end
+
+  class UpdateIssueComment
+    class << self
+      # @param [Hash] issue
+      # @param [Hash] issue_comment
+      def call(
+        issue:,
+        issue_comment:
+      )
+        new(
+          issue: issue,
+          issue_comment: issue_comment
+        ).call
+      end
+    end
+
+    # @param [Hash] issue_comment
+    # @param [Hash] issue
+    # @param [Hash] issue_comment
+    def initialize(
+      issue:,
+      issue_comment:
+    )
+      @issue = issue
+      @issue_comment = issue_comment
+    end
+
+    def call
+      data = IssueCommentsDatabase.read
+
+      data['issue_comments'] ||= {}
+      data['issue_comments'][issue_number_string] ||= {}
+      data['issue_comments'][issue_number_string][@issue_comment.id.to_s] = @issue_comment
+
+      IssueCommentsDatabase.write(data)
+    end
+
+    private
+
+    # @return [String]
+    def issue_comment_id_string
+      @issue_comment['id'].to_s
+    end
+
+    # @return [String]
+    def issue_number_string
+      @issue['number'].to_s
     end
   end
 end
