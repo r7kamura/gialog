@@ -1,15 +1,14 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import { getIssue, listIssues } from "../../lib/issue";
+import { getIssue, listIssues, listIssueComments, type Issue, type IssueComment } from "../../lib/issue";
 import Time from "../../components/Time";
 
 type Props = {
   issue: Issue;
+  issueComments: Array<IssueComment>,
 };
 
-type Issue = any;
-
-const ShowArticle: NextPage<Props> = ({ issue }) => {
+const ShowArticle: NextPage<Props> = ({ issue, issueComments }) => {
   return (
     <article>
       <header>
@@ -48,9 +47,11 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }: any) {
   const issueNumber = parseInt(params.issueNumber, 10);
   const issue = getIssue({ issueNumber });
+  const issueComments = listIssueComments({ issueNumber });
   return {
     props: {
       issue,
+      issueComments,
     },
   };
 }
