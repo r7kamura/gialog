@@ -33,13 +33,13 @@ jobs:
           bundler-cache: true
       - run: bundle exec ruby scripts/sync.rb
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: peaceiris/actions-gh-pages@v3
         with:
           destination_dir: .
           disable_nojekyll: true
           force_orphan: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           keep_files: false
           publish_branch: data
           publish_dir: data
