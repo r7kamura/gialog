@@ -15,7 +15,7 @@ module Giab
       case github_event_name
       when 'issues'
         UpdateIssue.call(payload['issue'])
-      when 'issue_comments'
+      when 'issue_comment'
         case github_action_name
         when 'created', 'edited'
           UpdateIssueComment.call(
