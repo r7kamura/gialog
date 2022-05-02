@@ -154,7 +154,7 @@ module Giab
     def call
       data = IssuesDatabase.read
       data['issues'] ||= {}
-      data['issues'][@issue['id']] = @issue.merge(
+      data['issues'][@issue['number'].to_s] = @issue.merge(
         'bodyHTML' => ConvertMarkdownToHtml.call(@issue['body'])
       )
       IssuesDatabase.write(data)
