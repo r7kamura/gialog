@@ -22,8 +22,11 @@ module Giab
             issue: payload['issue'],
             issue_comment: payload['comment']
           )
-        else
-          raise ::NotImplementedError, "Unknown action name: #{github_action_name.inspect}"
+        when 'deleted'
+          DeleteIssueComment.call(
+            issue: payload['issue'],
+            issue_comment: payload['comment']
+          )
         end
       else
         raise ::NotImplementedError, "Unknown event name: #{github_event_name.inspect}"
@@ -249,6 +252,39 @@ module Giab
     # @return [String]
     def issue_number_string
       @issue['number'].to_s
+    end
+  end
+
+  class DeleteIssueComment
+    class << self
+      # @param [Hash] issue
+      # @param [Hash] issue_comment
+      def call(
+        issue:,
+        issue_comment:
+      )
+        new(
+          issue: issue,
+          issue_comment: issue_comment
+        ).call
+      end
+    end
+
+    # @param [Hash] issue_comment
+    # @param [Hash] issue
+    # @param [Hash] issue_comment
+    def initialize(
+      issue:,
+      issue_comment:
+    )
+      @issue = issue
+      @issue_comment = issue_comment
+    end
+
+    def call
+      data = IssueCommentsDatabase.read
+      data['issue_comments'][issue_number_string].delete(issue_comment_id_string)
+      IssueCommentsDatabase.write(data)
     end
   end
 end
