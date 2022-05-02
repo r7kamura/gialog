@@ -17,7 +17,7 @@ export function getIssue({ issueNumber }: { issueNumber: number }): Issue {
 
 export function listIssues(): Array<Issue> {
   const data = loadData("./data/issues.json");
-  return Object.keys(data.issues).map((issueNumberString) => {
+  return Object.keys(data.issues || {}).map((issueNumberString) => {
     return data.issues[issueNumberString];
   });
 }
@@ -28,7 +28,7 @@ export function listIssueComments({
   issueNumber: number;
 }): Array<IssueComment> {
   const data = loadData("./data/issue_comments.json");
-  const issueCommentsMap = data.issue_comments[issueNumber.toString()];
+  const issueCommentsMap = (data.issue_comments || {})[issueNumber.toString()] || {};
   return Object.keys(issueCommentsMap).map((issueNumberString) => {
     return issueCommentsMap[issueNumberString];
   });
@@ -36,5 +36,5 @@ export function listIssueComments({
 
 function loadData(filePath: string) {
   const content = fs.readFileSync(filePath, { encoding: "utf-8" });
-  return JSON.parse(content);
+  return JSON.parse(content) || {};
 }
