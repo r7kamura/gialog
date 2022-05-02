@@ -4,7 +4,6 @@ export type Issue = any;
 
 export type IssueComment = any;
 
-
 export function getIssue({ issueNumber }: { issueNumber: number }): Issue {
   let result;
   listIssues().find((issue) => {
@@ -23,7 +22,11 @@ export function listIssues(): Array<Issue> {
   });
 }
 
-export function listIssueComments({ issueNumber }: { issueNumber: number }): Array<IssueComment> {
+export function listIssueComments({
+  issueNumber,
+}: {
+  issueNumber: number;
+}): Array<IssueComment> {
   const data = loadData("./data/issue_comments.json");
   const issueCommentsMap = data.issue_comments[issueNumber.toString()];
   return Object.keys(issueCommentsMap).map((issueNumberString) => {

@@ -1,14 +1,20 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import { getIssue, listIssues, listIssueComments, type Issue, type IssueComment } from "../../lib/issue";
+import {
+  getIssue,
+  listIssues,
+  listIssueComments,
+  type Issue,
+  type IssueComment,
+} from "../../lib/issue";
 import Time from "../../components/Time";
 
 type Props = {
   issue: Issue;
-  issueComments: Array<IssueComment>,
+  issueComments: Array<IssueComment>;
 };
 
-const ShowArticle: NextPage<Props> = ({ issue, issueComments }) => {
+const ShowArticle: NextPage<Props> = ({ issue }) => {
   return (
     <article>
       <header>
