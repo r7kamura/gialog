@@ -152,49 +152,52 @@ module Giab
     end
 
     def call
-      body_html = GetIssueBodyHtml.call(issue_number: @issue['number'])
-
       data = IssuesDatabase.read
       data['issues'] ||= {}
-      data['issues'][@issue['id']] = @issue.merge('bodyHTML' => body_html)
+      data['issues'][@issue['id']] = @issue.merge(
+        'bodyHTML' => ConvertMarkdownToHtml.call(@issue.body)
+      )
       IssuesDatabase.write(data)
     end
   end
 
-  class GetIssueBodyHtml
+  class ConvertMarkdownToHtml
     class << self
-      # @param [Integer] issue_number
-      # @return [String]
-      def call(issue_number:)
-        new(issue_number: issue_number).call
+      # @param [String] text
+      def call(text)
+        new(text).call
       end
     end
 
-    # @param [Integer] issue_number
-    def initialize(issue_number:)
-      @issue_number = issue_number
+    # @param [String] text
+    def initialize(text)
+      @text = text
     end
 
     # @return [String]
     def call
-      client = ::Octokit::Client.new(access_token: ::ENV['GITHUB_TOKEN'])
-      owner, name = ::ENV['GITHUB_REPOSITORY'].split('/', 2)
-      query = <<-GRAPHQL
-      query {
-        repository(owner: "#{owner}", name: "#{name}") {
-          issue(number: #{@issue_number}) {
-            bodyHTML
-          }
-        }
-      }
-      GRAPHQL
-      response = client.post(
-        '/graphql',
-        {
-          query: query
-        }.to_json
+      client.markdown(
+        @text,
+        context: context,
+        mode: 'gfm',
       )
-      response.data.repository.issue.bodyHTML
+    end
+
+    private
+
+    # @return [Octokit::Client]
+    def client
+      ::Octokit::Client.new(access_token: github_access_token)
+    end
+
+    # @return [String]
+    def context
+      ::ENV['GITHUB_REPOSITORY']
+    end
+
+    # @return [String]
+    def github_access_token
+      ::ENV['GITHUB_TOKEN']
     end
   end
 
@@ -229,7 +232,9 @@ module Giab
 
       data['issue_comments'] ||= {}
       data['issue_comments'][issue_number_string] ||= {}
-      data['issue_comments'][issue_number_string][issue_comment_id_string] = @issue_comment
+      data['issue_comments'][issue_number_string][issue_comment_id_string] = @issue_comment.merge(
+        'bodyHTML' => ConvertMarkdownToHtml.call(@issue_comment.body)
+      )
 
       IssueCommentsDatabase.write(data)
     end
