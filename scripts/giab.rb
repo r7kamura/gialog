@@ -35,7 +35,7 @@ module Giab
     end
   end
 
-  class Database
+  class IssuesDatabase
     DEFAULT_VALUE = {}
 
     class << self
@@ -96,10 +96,10 @@ module Giab
     def call
       body_html = GetIssueBodyHtml.call(issue_number: @issue['number'])
 
-      data = Database.read
+      data = IssuesDatabase.read
       data['issues'] ||= {}
       data['issues'][@issue['id']] = @issue.merge('bodyHTML' => body_html)
-      Database.write(data)
+      IssuesDatabase.write(data)
     end
   end
 
