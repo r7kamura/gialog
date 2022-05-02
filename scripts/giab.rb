@@ -286,5 +286,17 @@ module Giab
       data['issue_comments'][issue_number_string].delete(issue_comment_id_string)
       IssueCommentsDatabase.write(data)
     end
+
+    private
+
+    # @return [String]
+    def issue_comment_id_string
+      @issue_comment['id'].to_s
+    end
+
+    # @return [String]
+    def issue_number_string
+      @issue['number'].to_s
+    end
   end
 end
