@@ -155,7 +155,7 @@ module Giab
       data = IssuesDatabase.read
       data['issues'] ||= {}
       data['issues'][@issue['id']] = @issue.merge(
-        'bodyHTML' => ConvertMarkdownToHtml.call(@issue.body)
+        'bodyHTML' => ConvertMarkdownToHtml.call(@issue['body'])
       )
       IssuesDatabase.write(data)
     end
@@ -233,7 +233,7 @@ module Giab
       data['issue_comments'] ||= {}
       data['issue_comments'][issue_number_string] ||= {}
       data['issue_comments'][issue_number_string][issue_comment_id_string] = @issue_comment.merge(
-        'bodyHTML' => ConvertMarkdownToHtml.call(@issue_comment.body)
+        'bodyHTML' => ConvertMarkdownToHtml.call(@issue_comment['body'])
       )
 
       IssueCommentsDatabase.write(data)
