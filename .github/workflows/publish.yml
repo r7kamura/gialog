@@ -3,6 +3,7 @@ name: publish
 on:
   push:
     branches:
+      - data
       - main
   workflow_dispatch:
 
@@ -11,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: main
       - uses: actions/checkout@v3
         with:
           path: data
