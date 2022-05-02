@@ -8,7 +8,7 @@ type Props = {
   issueComments: Array<IssueComment>,
 };
 
-const ShowArticle: NextPage<Props> = ({ issue }) => {
+const ShowArticle: NextPage<Props> = ({ issue, issueComments }) => {
   return (
     <article>
       <header>
