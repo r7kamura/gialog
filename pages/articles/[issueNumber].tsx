@@ -14,22 +14,34 @@ type Props = {
   issueComments: Array<IssueComment>;
 };
 
-const ShowArticle: NextPage<Props> = ({ issue }) => {
+const ShowArticle: NextPage<Props> = ({ issue, issueComments }) => {
   return (
     <article>
-      <header>
-        <Time dateTime={issue.created_at} />
-        <h1>{issue.title}</h1>
-      </header>
-      <footer>
-        <p>
-          Posted by&nbsp;
-          <Link href={issue.user.html_url}>{issue.user.login}</Link>
-          &nbsp;at&nbsp;
-          <Link href={issue.html_url}>{`#${issue.number}`}</Link>.
-        </p>
-      </footer>
-      <div dangerouslySetInnerHTML={{ __html: issue.bodyHTML }}></div>
+      <section>
+        <header>
+          <Time dateTime={issue.created_at} />
+          <h1>{issue.title}</h1>
+        </header>
+        <aside>
+          <p>
+            Posted by&nbsp;
+            <Link href={issue.user.html_url}>{issue.user.login}</Link>
+            &nbsp;at&nbsp;
+            <Link href={issue.html_url}>{`#${issue.number}`}</Link>.
+          </p>
+        </aside>
+        <div dangerouslySetInnerHTML={{ __html: issue.bodyHTML }}></div>
+      </section>
+      {issueComments.map((issueComment) => (
+        <article>
+          <section>
+            <header>
+              <Time dateTime={issueComment.created_at} />
+            </header>
+            <div dangerouslySetInnerHTML={{ __html: issueComment.bodyHTML }}></div>
+          </section>
+        </article>
+      ))}
     </article>
   );
 };

@@ -32,8 +32,9 @@ nav {
   padding: 2rem;
 }
 
-main {
+section {
   background-color: #fff;
+  margin-bottom: 1rem;
   padding: 3rem 2rem;
 }
 
@@ -77,7 +78,7 @@ section ol {
   padding-left: 0;
 }
 
-section li + li {
+section li {
   margin-top: 2rem;
 }
 
@@ -87,7 +88,7 @@ time {
   font-size: 0.8rem;
 }
 
-article footer {
+aside {
   color: var(--color-light);
   font-size: 0.8rem;
 }
