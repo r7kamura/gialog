@@ -229,7 +229,7 @@ module Giab
 
       data['issue_comments'] ||= {}
       data['issue_comments'][issue_number_string] ||= {}
-      data['issue_comments'][issue_number_string][@issue_comment.id.to_s] = @issue_comment
+      data['issue_comments'][issue_number_string][issue_comment_id_string] = @issue_comment
 
       IssueCommentsDatabase.write(data)
     end
