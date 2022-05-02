@@ -18,10 +18,10 @@ const ShowArticle: NextPage<Props> = ({ issue }) => {
       </header>
       <footer>
         <p>
-          This article was posted by&nbsp;
+          Posted by&nbsp;
           <Link href={issue.user.html_url}>{issue.user.login}</Link>
-          &nbsp;on&nbsp;
-          <Link href={issue.html_url}>GitHub Issue</Link>.
+          &nbsp;at&nbsp;
+          <Link href={issue.html_url}>{`#${issue.number}`}</Link>.
         </p>
       </footer>
       <div dangerouslySetInnerHTML={{ __html: issue.bodyHTML }}></div>
