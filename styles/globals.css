@@ -167,3 +167,7 @@ blockquote {
   margin: 1rem 0;
   padding-left: 1rem;
 }
+
+video {
+  max-width: 100%;
+}
