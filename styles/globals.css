@@ -45,7 +45,7 @@ header nav {
   font-weight: 700;
 }
 
-footer {
+footer nav {
   font-size: 0.8rem;
   text-align: center;
 }
@@ -84,6 +84,11 @@ section li + li {
 time {
   color: var(--color-light);
   display: block;
+  font-size: 0.8rem;
+}
+
+article footer {
+  color: var(--color-light);
   font-size: 0.8rem;
 }
 

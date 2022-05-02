@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import { getIssue, listIssues } from "../../lib/issue";
 import Time from "../../components/Time";
 
@@ -15,6 +16,14 @@ const ShowArticle: NextPage<Props> = ({ issue }) => {
         <Time dateTime={issue.created_at} />
         <h1>{issue.title}</h1>
       </header>
+      <footer>
+        <p>
+          This article was posted by&nbsp;
+          <Link href={issue.user.html_url}>{issue.user.login}</Link>
+          &nbsp;on&nbsp;
+          <Link href={issue.html_url}>GitHub Issue</Link>.
+        </p>
+      </footer>
       <div dangerouslySetInnerHTML={{ __html: issue.bodyHTML }}></div>
     </article>
   );
