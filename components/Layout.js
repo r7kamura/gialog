@@ -21,11 +21,6 @@ export default function Layout({ children }) {
                 <a>Home</a>
               </Link>
             </li>
-            <li>
-              <Link href="/about">
-                <a>About</a>
-              </Link>
-            </li>
           </ul>
         </nav>
       </footer>
