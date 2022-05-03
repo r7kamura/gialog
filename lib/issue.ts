@@ -19,7 +19,7 @@ export function listIssues(): Array<Issue> {
   const data = loadData("./data/issues.json");
   return Object.keys(data.issues || {}).map((issueNumberString) => {
     return data.issues[issueNumberString];
-  });
+  }).sort(byCreatedAt);
 }
 
 export function listIssueComments({
@@ -37,4 +37,18 @@ export function listIssueComments({
 function loadData(filePath: string) {
   const content = fs.readFileSync(filePath, { encoding: "utf-8" });
   return JSON.parse(content) || {};
+}
+
+type SortableByCreatedAt = {
+  created_at: any;
+}
+
+function byCreatedAt(a: SortableByCreatedAt, b: SortableByCreatedAt) {
+  if (a.created_at < b.created_at) {
+    return 1;
+  } else if (a.created_at > b.created_at) {
+    return -1;
+  } else {
+    return 0;
+  }
 }
