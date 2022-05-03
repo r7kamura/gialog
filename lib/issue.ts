@@ -35,8 +35,12 @@ export function listIssueComments({
 }
 
 function loadData(filePath: string) {
-  const content = fs.readFileSync(filePath, { encoding: "utf-8" });
-  return JSON.parse(content) || {};
+  try {
+    const content = fs.readFileSync(filePath, { encoding: "utf-8" });
+    return JSON.parse(content);
+  } catch (_error) {
+    return {};
+  }
 }
 
 type SortableByCreatedAt = {
