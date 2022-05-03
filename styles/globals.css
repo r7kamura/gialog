@@ -171,3 +171,32 @@ blockquote {
 video {
   max-width: 100%;
 }
+
+.task-list-item {
+  list-style-type: none;
+}
+
+.task-list-item label {
+  font-weight: 400;
+}
+
+.task-list-item.enabled label {
+  cursor: pointer;
+}
+
+.task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.task-list-item .handle {
+  display: none;
+}
+
+.task-list-item-checkbox {
+  margin: 0 .2em .25em -1.6em;
+  vertical-align: middle;
+}
+
+.contains-task-list:dir(rtl) .task-list-item-checkbox {
+  margin: 0 -1.6em .25em .2em;
+}
