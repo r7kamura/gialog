@@ -15,6 +15,7 @@ module Giab
       case github_event_name
       when 'issues'
         case github_action_name
+        when 'deleted'
           DeleteIssue.call(payload['issue'])
         else
           UpdateIssue.call(payload['issue'])
