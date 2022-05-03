@@ -27,6 +27,8 @@ module Giab
             issue: payload['issue'],
             issue_comment: payload['comment']
           )
+        else
+          raise ::NotImplementedError, "Unknown action name: #{github_action_name.inspect}"
         end
       else
         raise ::NotImplementedError, "Unknown event name: #{github_event_name.inspect}"
