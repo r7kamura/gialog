@@ -19,7 +19,7 @@ export function listIssues(): Array<Issue> {
   const data = loadData("./data/issues.json");
   return Object.keys(data.issues || {}).map((issueNumberString) => {
     return data.issues[issueNumberString];
-  }).sort(byCreatedAt);
+  }).sort(byCreatedAt).reverse();
 }
 
 export function listIssueComments({
@@ -31,7 +31,7 @@ export function listIssueComments({
   const issueCommentsMap = (data.issue_comments || {})[issueNumber.toString()] || {};
   return Object.keys(issueCommentsMap).map((issueNumberString) => {
     return issueCommentsMap[issueNumberString];
-  });
+  }).sort(byCreatedAt);
 }
 
 function loadData(filePath: string) {
@@ -45,9 +45,9 @@ type SortableByCreatedAt = {
 
 function byCreatedAt(a: SortableByCreatedAt, b: SortableByCreatedAt) {
   if (a.created_at < b.created_at) {
-    return 1;
-  } else if (a.created_at > b.created_at) {
     return -1;
+  } else if (a.created_at > b.created_at) {
+    return 1;
   } else {
     return 0;
   }
