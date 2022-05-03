@@ -17,18 +17,16 @@ module Giab
         UpdateIssue.call(payload['issue'])
       when 'issue_comment'
         case github_action_name
-        when 'created', 'edited'
-          UpdateIssueComment.call(
-            issue: payload['issue'],
-            issue_comment: payload['comment']
-          )
         when 'deleted'
           DeleteIssueComment.call(
             issue: payload['issue'],
             issue_comment: payload['comment']
           )
         else
-          raise ::NotImplementedError, "Unknown action name: #{github_action_name.inspect}"
+          UpdateIssueComment.call(
+            issue: payload['issue'],
+            issue_comment: payload['comment']
+          )
         end
       else
         raise ::NotImplementedError, "Unknown event name: #{github_event_name.inspect}"
