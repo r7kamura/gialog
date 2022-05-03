@@ -34,6 +34,7 @@ jobs:
       - run: bundle exec ruby scripts/sync.rb
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: cp -r .github data/.github
       - uses: peaceiris/actions-gh-pages@v3
         with:
           destination_dir: .
