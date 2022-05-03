@@ -34,13 +34,12 @@ jobs:
       - run: bundle exec ruby scripts/sync.rb
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: |
-          cp -r .github data/.github
-          ls -la data
+      - run: cp -r .github data/.github
       - uses: peaceiris/actions-gh-pages@v3
         with:
           destination_dir: .
           disable_nojekyll: true
+          exclude_assets: ""
           force_orphan: true
           github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           publish_branch: data
