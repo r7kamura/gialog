@@ -179,6 +179,8 @@ module Giab
 
     # @return [String]
     def call
+      return unless @text
+
       client.markdown(
         @text,
         context: context,
