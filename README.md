@@ -1,3 +1,8 @@
-# github-issues-as-blog
+# GitHub Issues as Blog
 
-Blog engine that uses GitHub Issues as CMS.
+Build blog site that uses GitHub Issues as its backend.
+
+## Usage
+
+1. Create new repository from [Use this template](https://github.com/r7kamura/github-issues-as-blog/generate) button above
+2. Done
