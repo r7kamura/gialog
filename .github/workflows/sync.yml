@@ -28,6 +28,7 @@ jobs:
         with:
           path: data
           ref: data
+        continue-on-error: true
       - uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
