@@ -1,6 +1,6 @@
 # GitHub Issues as Blog
 
-Build blog site that uses GitHub Issues as its backend.
+Blog engine that uses GitHub Issues as its backend.
 
 ## Usage
 
