@@ -7,7 +7,7 @@ export default function Layout({ children }) {
         <nav>
           <p>
             <Link href="/">
-              <a>github-issues-as-blog</a>
+              <a>My blog</a>
             </Link>
           </p>
         </nav>
