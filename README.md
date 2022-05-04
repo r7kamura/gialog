@@ -1,6 +1,6 @@
 # Gialog
 
-Blog generator template to use GitHub Issues as article editor.
+Blog template to use GitHub Issues as article editor.
 
 ## Usage
 
