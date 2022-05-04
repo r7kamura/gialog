@@ -1,6 +1,6 @@
-# GitHub Issues as Blog
+# Gialog
 
-Blog engine that uses GitHub Issues as its backend.
+Use GitHub Issues as blog editor.
 
 ## Usage
 
