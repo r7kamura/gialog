@@ -73,12 +73,12 @@ section + section {
   margin-top: 3rem;
 }
 
-section ol {
+section > ol {
   list-style-type: none;
   padding-left: 0;
 }
 
-section li {
+section > ol > li {
   margin-top: 2rem;
 }
 
