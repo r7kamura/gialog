@@ -17,9 +17,12 @@ export function getIssue({ issueNumber }: { issueNumber: number }): Issue {
 
 export function listIssues(): Array<Issue> {
   const data = loadData("./data/issues.json");
-  return Object.keys(data.issues || {}).map((issueNumberString) => {
-    return data.issues[issueNumberString];
-  }).sort(byCreatedAt).reverse();
+  return Object.keys(data.issues || {})
+    .map((issueNumberString) => {
+      return data.issues[issueNumberString];
+    })
+    .sort(byCreatedAt)
+    .reverse();
 }
 
 export function listIssueComments({
@@ -28,10 +31,13 @@ export function listIssueComments({
   issueNumber: number;
 }): Array<IssueComment> {
   const data = loadData("./data/issue_comments.json");
-  const issueCommentsMap = (data.issue_comments || {})[issueNumber.toString()] || {};
-  return Object.keys(issueCommentsMap).map((issueNumberString) => {
-    return issueCommentsMap[issueNumberString];
-  }).sort(byCreatedAt);
+  const issueCommentsMap =
+    (data.issue_comments || {})[issueNumber.toString()] || {};
+  return Object.keys(issueCommentsMap)
+    .map((issueNumberString) => {
+      return issueCommentsMap[issueNumberString];
+    })
+    .sort(byCreatedAt);
 }
 
 function loadData(filePath: string) {
@@ -45,7 +51,7 @@ function loadData(filePath: string) {
 
 type SortableByCreatedAt = {
   created_at: any;
-}
+};
 
 function byCreatedAt(a: SortableByCreatedAt, b: SortableByCreatedAt) {
   if (a.created_at < b.created_at) {

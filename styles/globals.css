@@ -184,7 +184,7 @@ video {
   cursor: pointer;
 }
 
-.task-list-item+.task-list-item {
+.task-list-item + .task-list-item {
   margin-top: 3px;
 }
 
@@ -193,10 +193,10 @@ video {
 }
 
 .task-list-item-checkbox {
-  margin: 0 .2em .25em -1.6em;
+  margin: 0 0.2em 0.25em -1.6em;
   vertical-align: middle;
 }
 
 .contains-task-list:dir(rtl) .task-list-item-checkbox {
-  margin: 0 -1.6em .25em .2em;
+  margin: 0 -1.6em 0.25em 0.2em;
 }
