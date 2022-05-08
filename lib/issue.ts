@@ -1,59 +1,71 @@
 import fs from "fs";
+import glob from "glob-promise";
+import matter from "gray-matter";
+import { remark } from "remark";
+import remarkGfm from "remark-gfm";
+import remarkGithub from "remark-github";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import rehypeStringify from "rehype-stringify";
 
 export type Issue = any;
 
 export type IssueComment = any;
 
-export function getIssue({ issueNumber }: { issueNumber: number }): Issue {
-  let result;
-  listIssues().find((issue) => {
-    if (issue.number === issueNumber) {
-      result = issue;
-      return true;
-    }
-  });
-  return result;
+const dataDirectoryPath = process.env.DATA_DIRECTORY_PATH || "./data";
+
+export async function getIssue({ issueNumber }: { issueNumber: number }) {
+  const filePath = `${dataDirectoryPath}/issues/${issueNumber}/issue.md`;
+  const content = fs.readFileSync(filePath, { encoding: "utf-8" });
+  const issueMatter = matter(content);
+  const body = issueMatter.content;
+  const bodyHTML = await renderMarkdown(body);
+  return {
+    body,
+    bodyHTML,
+    ...issueMatter.data,
+  };
 }
 
-export function listIssues(): Array<Issue> {
-  const data = loadData("./data/issues.json");
-  return Object.keys(data.issues || {})
-    .map((issueNumberString) => {
-      return data.issues[issueNumberString];
+export async function listIssues() {
+  const paths = await glob.promise(`${dataDirectoryPath}/issues/*/issue.md`);
+  return paths
+    .map((filePath) => {
+      const content = fs.readFileSync(filePath, { encoding: "utf-8" });
+      const issueMatter = matter(content);
+      const body = issueMatter.content;
+      return {
+        body,
+        ...issueMatter.data,
+      };
     })
     .sort(byCreatedAt)
     .reverse();
 }
 
-export function listIssueComments({
+export async function listIssueComments({
   issueNumber,
 }: {
   issueNumber: number;
-}): Array<IssueComment> {
-  const data = loadData("./data/issue_comments.json");
-  const issueCommentsMap =
-    (data.issue_comments || {})[issueNumber.toString()] || {};
-  return Object.keys(issueCommentsMap)
-    .map((issueNumberString) => {
-      return issueCommentsMap[issueNumberString];
+}) {
+  const paths = await glob.promise(
+    `${dataDirectoryPath}/issues/${issueNumber}/issue_comments/*.md`
+  );
+  return paths
+    .map((filePath) => {
+      const content = fs.readFileSync(filePath, { encoding: "utf-8" });
+      const issueMatter = matter(content);
+      const body = issueMatter.content;
+      return {
+        body,
+        ...issueMatter.data,
+      };
     })
-    .sort(byCreatedAt);
+    .sort(byCreatedAt)
+    .reverse();
 }
 
-function loadData(filePath: string) {
-  try {
-    const content = fs.readFileSync(filePath, { encoding: "utf-8" });
-    return JSON.parse(content);
-  } catch (_error) {
-    return {};
-  }
-}
-
-type SortableByCreatedAt = {
-  created_at: any;
-};
-
-function byCreatedAt(a: SortableByCreatedAt, b: SortableByCreatedAt) {
+function byCreatedAt(a: any, b: any) {
   if (a.created_at < b.created_at) {
     return -1;
   } else if (a.created_at > b.created_at) {
@@ -61,4 +73,18 @@ function byCreatedAt(a: SortableByCreatedAt, b: SortableByCreatedAt) {
   } else {
     return 0;
   }
+}
+
+async function renderMarkdown(content: string) {
+  const result = await remark()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkGithub, {
+      repository: process.env.GITHUB_REPOSITORY || "github/dummy",
+    })
+    .use(remarkRehype)
+    .use(rehypeStringify)
+    .use(remarkGfm)
+    .process(content);
+  return result.toString();
 }

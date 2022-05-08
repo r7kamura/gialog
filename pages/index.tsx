@@ -29,7 +29,7 @@ export default Home;
 export async function getStaticProps() {
   return {
     props: {
-      issues: listIssues(),
+      issues: await listIssues(),
     },
   };
 }

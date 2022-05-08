@@ -31,7 +31,7 @@ jobs:
           path: data
           ref: data
         continue-on-error: true
-      - uses: r7kamura/gialog-sync@v0
+      - uses: r7kamura/gialog-sync@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: peaceiris/actions-gh-pages@v3
