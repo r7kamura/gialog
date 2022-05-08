@@ -1,13 +1,19 @@
+import Head from "next/head";
 import Link from "next/link";
+
+const siteTitle = process.env.GITHUB_REPOSITORY || "My blog";
 
 export default function Layout({ children }) {
   return (
     <>
+      <Head>
+        <title>{siteTitle}</title>
+      </Head>
       <header>
         <nav>
           <p>
             <Link href="/">
-              <a>My blog</a>
+              <a>{siteTitle}</a>
             </Link>
           </p>
         </nav>
