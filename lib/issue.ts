@@ -63,8 +63,8 @@ export async function listIssueComments({
         ...issueMatter.data,
       };
     })
-  )
-  return issueComments.sort(byCreatedAt)
+  );
+  return issueComments.sort(byCreatedAt);
 }
 
 function byCreatedAt(a: any, b: any) {
