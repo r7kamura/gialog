@@ -44,8 +44,8 @@ issues_data['issues'].each do |issue_number, issue|
   issue.delete('bodyHTML')
   body = issue.delete('body')
   issue_file_content = [
-    body,
-    issue.to_yaml
+    issue.to_yaml,
+    body
   ].join("\n---\n")
   issue_file_path = "#{data_path}/issues/#{issue_number}/issue.md"
   issue_file_pathname = Pathname.new(issue_file_path)
@@ -63,8 +63,8 @@ issue_comments_data['issue_comments'].each do |issue_number, hash|
     issue_comment.delete('bodyHTML')
     body = issue_comment.delete('body')
     issue_comment_file_content = [
-      body,
-      issue_comment.to_yaml
+      issue_comment.to_yaml,
+      body
     ].join("\n---\n")
     issue_comment_file_path = "#{data_path}/issues/#{issue_number}/issue_comments/#{issue_comment_id}.md"
     issue_comment_file_pathname = Pathname.new(issue_comment_file_path)
