@@ -10,6 +10,24 @@
 # git commit -m "Migrate data from v0 format to v1 format"
 # git push
 #````
+#
+# Then switch gialog-sync@v0 to gialog-sync@v1 by modifying .github/workflows/sync.yml as follows:
+#
+# ```
+# diff --git a/.github/workflows/sync.yml b/.github/workflows/sync.yml
+# index 07c99a2..7339de2 100644
+# --- a/.github/workflows/sync.yml
+# +++ b/.github/workflows/sync.yml
+# @@ -31,7 +31,7 @@ jobs:
+#            path: data
+#            ref: data
+#          continue-on-error: true
+# -      - uses: r7kamura/gialog-sync@v0
+# +      - uses: r7kamura/gialog-sync@v1
+#          env:
+#            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        - uses: peaceiris/actions-gh-pages@v3
+# ```
 
 require 'json'
 require 'pathname'
