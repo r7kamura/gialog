@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (min-width: 1000px) {
+  html {
+    font-size: 1.6vw;
+  }
+}
+
+@media (min-width: 1200px) {
+  html {
+    font-size: 19.2px;
+  }
+}
+
+html {
+  font-family: sans-serif;
+}
+
+body {
+  line-height: 1.8;
+  word-wrap: break-word;
+}
+
+a {
+  color: rgb(0, 0, 238);
+
+  @apply underline;
+  @apply dark:text-blue-400;
+
+  &:visited {
+    color: rgb(85, 26, 139);
+
+    @apply dark:text-violet-300;
+  }
+}
