@@ -17,16 +17,16 @@ type Props = {
 
 const ShowArticle: NextPage<Props> = ({ issue, issueComments }) => {
   return (
-    <article>
+    <div className="divide-y divide-gray-300 dark:divide-gray-700">
       <Head>
         <title>{issue.title}</title>
       </Head>
-      <section>
+      <article className="markdown">
         <header>
           <Time dateTime={issue.created_at} />
           <h1>{issue.title}</h1>
         </header>
-        <aside>
+        <aside className="block text-[.8rem] text-gray-500 dark:text-gray-400">
           <p>
             Posted by&nbsp;
             <Link href={issue.user.html_url}>{issue.user.login}</Link>
@@ -35,20 +35,13 @@ const ShowArticle: NextPage<Props> = ({ issue, issueComments }) => {
           </p>
         </aside>
         <div dangerouslySetInnerHTML={{ __html: issue.bodyHTML }}></div>
-      </section>
+      </article>
       {issueComments.map((issueComment) => (
-        <article key={issueComment.id}>
-          <section>
-            <header>
-              <Time dateTime={issueComment.created_at} />
-            </header>
-            <div
-              dangerouslySetInnerHTML={{ __html: issueComment.bodyHTML }}
-            ></div>
-          </section>
+        <article key={issueComment.id} className="markdown">
+          <div dangerouslySetInnerHTML={{ __html: issueComment.bodyHTML }} />
         </article>
       ))}
-    </article>
+    </div>
   );
 };
 
