@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 const siteTitle = "My blog";
 
